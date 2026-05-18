@@ -11,6 +11,9 @@ export class PageOptionsDto {
   })
   readonly order!: Order;
 
+  @StringFieldOptional()
+  readonly orderBy?: string;
+
   @NumberFieldOptional({
     minimum: 1,
     default: 1,

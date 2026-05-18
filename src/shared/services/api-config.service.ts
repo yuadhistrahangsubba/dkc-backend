@@ -6,6 +6,7 @@ import type { ThrottlerOptions } from '@nestjs/throttler';
 import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import parse from 'parse-duration';
 
+import { AuditLogSubscriber } from '../../entity-subscribers/audit-log-subscriber.ts';
 import { UserSubscriber } from '../../entity-subscribers/user-subscriber.ts';
 import { SnakeNamingStrategy } from '../../snake-naming.strategy.ts';
 
@@ -77,7 +78,7 @@ export class ApiConfigService {
       throw new Error(`${key} environment variable doesn't exist`);
     }
 
-    return value.toString().replaceAll(String.raw`\n`, '\n');
+    return value.replaceAll(String.raw`\n`, '\n');
   }
 
   get nodeEnv(): string {
@@ -115,14 +116,18 @@ export class ApiConfigService {
       username: this.getString('DB_USERNAME'),
       password: this.getString('DB_PASSWORD'),
       database: this.getString('DB_DATABASE'),
-      subscribers: [UserSubscriber],
+      subscribers: [UserSubscriber, AuditLogSubscriber],
       migrationsRun: true,
       logging: this.getBoolean('ENABLE_ORM_LOGS'),
       namingStrategy: new SnakeNamingStrategy(),
     };
   }
 
-  get awsS3Config() {
+  get awsS3Config(): {
+    bucketRegion: string;
+    bucketApiVersion: string;
+    bucketName: string;
+  } {
     return {
       bucketRegion: this.getString('AWS_S3_BUCKET_REGION'),
       bucketApiVersion: this.getString('AWS_S3_API_VERSION'),
@@ -138,14 +143,18 @@ export class ApiConfigService {
     return this.getBoolean('NATS_ENABLED');
   }
 
-  get natsConfig() {
+  get natsConfig(): { host: string; port: number } {
     return {
       host: this.getString('NATS_HOST'),
       port: this.getNumber('NATS_PORT'),
     };
   }
 
-  get authConfig() {
+  get authConfig(): {
+    privateKey: string;
+    publicKey: string;
+    jwtExpirationTime: number;
+  } {
     return {
       privateKey: this.getString('JWT_PRIVATE_KEY'),
       publicKey: this.getString('JWT_PUBLIC_KEY'),
@@ -153,7 +162,7 @@ export class ApiConfigService {
     };
   }
 
-  get appConfig() {
+  get appConfig(): { port: string } {
     return {
       port: this.getString('PORT'),
     };
