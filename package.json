@@ -1,18 +1,19 @@
 {
-  "name": "awesome-nestjs-boilerplate",
+  "name": "dkc-backend",
   "version": "11.0.0",
-  "description": "Awesome NestJS Boilerplate, Typescript, Postgres, TypeORM",
-  "author": "Narek Hakobyan <narek.hakobyan.07@gmail.com>",
+  "description": "DKC Backend, Typescript, Postgres, TypeORM",
+  "author": "yuadhistrahangsubba10@gmail.com>",
   "private": true,
   "license": "MIT",
   "type": "module",
   "packageManager": "pnpm@10.26.2",
   "engines": {
-    "node": ">=25.0.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
-    "build:prod": "nest build",
-    "start:dev": "vite",
+    "build:prod": "nest build -p tsconfig.build.json",
+    "start:dev": "node --loader ts-node/esm src/main.ts",
+    "watch:dev": "nest start --watch ./src/main.ts",
     "nest:start": "nest start ./src/main.ts",
     "nest:start:dev": "nest start --watch",
     "nest:start:debug": "nest start --debug --watch",
@@ -85,6 +86,7 @@
     "helmet": "^8.1.0",
     "ioredis": "^5.7.0",
     "jsonwebtoken": "^9.0.2",
+    "libphonenumber-js": "^1.13.2",
     "limax": "^4.1.0",
     "lodash": "^4.17.21",
     "meilisearch": "^0.54.0",
@@ -133,7 +135,6 @@
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.39.1",
     "@typescript-eslint/parser": "^8.39.1",
-    "vitepress": "^1.6.3",
     "awesome-nestjs-schematics": "^10.1.1",
     "concurrently": "^9.2.1",
     "cross-env": "^10.0.0",
@@ -165,7 +166,8 @@
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.39.1",
     "vite": "7.1.2",
-    "vite-plugin-node": "^7.0.0"
+    "vite-plugin-node": "^7.0.0",
+    "vitepress": "^1.6.3"
   },
   "lint-staged": {
     "src/**/*.ts": [

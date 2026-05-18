@@ -153,6 +153,7 @@ export default tseslint.config(
     rules: {
       'n/no-extraneous-import': 'off',
       'n/no-missing-import': 'off',
+      'n/no-unsupported-features/node-builtins': 'off',
     },
   },
   {

@@ -36,13 +36,13 @@ export class UserController {
   @Auth([RoleType.USER])
   @HttpCode(HttpStatus.OK)
   @UseLanguageInterceptor()
-  async admin(@AuthUser() user: UserEntity) {
+  async admin(@AuthUser() user: UserEntity): Promise<{ text: string }> {
     const translation = await this.translationService.translate(
       'admin.keywords.admin',
     );
 
     return {
-      text: `${translation} ${user.firstName}`,
+      text: `${translation} ${user.fullName}`,
     };
   }
 
@@ -66,7 +66,7 @@ export class UserController {
   @ApiUUIDParam('id')
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Get users list',
+    description: 'Get user details',
     type: UserDto,
   })
   getUser(@UUIDParam('id') userId: Uuid): Promise<UserDto> {

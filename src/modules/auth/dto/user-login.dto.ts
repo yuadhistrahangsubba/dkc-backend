@@ -1,12 +1,14 @@
-import {
-  EmailField,
-  StringField,
-} from '../../../decorators/field.decorators.ts';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UserLoginDto {
-  @EmailField()
-  readonly email!: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  identificationNo!: string;
 
-  @StringField()
-  readonly password!: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  password!: string;
 }
